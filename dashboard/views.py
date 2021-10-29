@@ -9,5 +9,5 @@ def calculate():
 # Create your views here.
 def say_hello(request):
     x = calculate()
-    return render(request, 'hello.html', {'name': 'Mosh'})
+    return render(request, 'dashboard/hello.html', {'name': 'Mosh'})
  
