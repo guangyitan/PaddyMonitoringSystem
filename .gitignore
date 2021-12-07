@@ -136,6 +136,7 @@ celerybeat-schedule.*
 *.sage.py 
 
 # Environments 
+.paddyMonitoringSystemVenv
 .env 
 .venv 
 env/ 
@@ -253,3 +254,4 @@ cython_debug/
 
 #json
 *.json
+db.sqlite3

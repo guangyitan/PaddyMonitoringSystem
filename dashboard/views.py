@@ -12,8 +12,8 @@ def calculate():
 
 # Create your views here.
 def index(request):
-    # map_ = my_folium.getMap()
-    map_ = my_folium.getMap(ee = True)
+    map_ = my_folium.getMap()
+    # map_ = my_folium.getMap(ee = True)
 
     form = forms.PaddyAreaInfoForm()
 
