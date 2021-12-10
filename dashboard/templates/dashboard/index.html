@@ -2,6 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
+<style>
+    .row{
+        margin: 10px;
+    }
+</style>
+
     <h1>Paddy Area Monitoring System</h1>
     <!-- <table>
         <tr>
@@ -25,30 +32,62 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-12">
                 {{map|safe}}
             </div>
-            <div id="paddy-area-list" class="col-4">
+        </div>
+        <div class="row">
+            <div id="paddy-area-list" class="col-12" style="padding: 0%;">
                 <div class="row">
-                    <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto; margin-right: 12px; margin-bottom: 12px;"
+                    <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto; margin-right: 12px;"
                     onclick="addNewPaddyArea()">Add New</button>
                 </div>
                 <div class="row">
-                    <table id="info_table" class="table table-striped table-dark">
+                    <table id="info_table" class="table table-striped table-dark" style="padding: 0% !important;">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Area Name</th>
-                                <th>Date</th>
-                                <th>Lat/Lon</th>
+                                <th>Start Date</th>
+                                <th>Latitude</th>
+                                <th>Logitude</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {% for i in paddy_areas %}
+                            <tr>
+                                <td>{{i.id}}</td>
+                                <td>{{i.area_name}}</td>
+                                <td>{{i.start_date}}</td>
+                                <td>{{i.latitude}}</td>
+                                <td>{{i.logitude}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
-            <div id="new-paddy-area" class="col-4" style="display: none;">
+            <div class="col-12">
+                <form action="/dashboard/index" method="post">
+                    {% csrf_token %}
+                    <label for="area_name">Area Name: </label>
+                    <input id="area_name" type="text" name="area_name" maxlength="50" value="Area a" required>
+
+                    <label for="start_date">Start Date: </label>
+                    <input id="start_date" type="datetime-local" name="start_date" value="10/12/2021" required>
+
+                    <label for="logitude">Logitude: </label>
+                    <input id="logitude" type="number" name="logitude" min="-180" max="180" value="0" step="0.000001" required>
+
+                    <label for="latitude">Latitude: </label>
+                    <input id="latitude" type="number" name="latitude" min="0" max="90" value="0" step="0.000001" required>
+                    <input type="submit" value="OK">
+                </form>
+            </div>
+
+            <!-- <div id="new-paddy-area" class="col-12" style="display: none;">
                 <div class="row">
-                    <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto; margin-right: 12px; margin-bottom: 12px;"
+                    <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto;"
                     onclick="showList()">Show List</button>
                 </div>
                 <div class="row">
@@ -57,7 +96,7 @@
                         <div class="row" style="padding-bottom: 10px;">
                             <div class="col-6" style="color: white;">Area Name</div>
                             <div class="col-6">
-                                <input type="text" placeholder="Enter name" name="task" id="task" required>
+                                <input type="text" style="float: right;" placeholder="Enter name" name="task" id="task" required>
                             </div>
                         </div>
                         <div class="row" style="padding-bottom: 10px;">
@@ -91,7 +130,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto; margin-right: 12px; margin-bottom: 12px; background-color: grey;">
+                            <button class="button-40" style="width: 150px; margin-right: 0; margin-left: auto; background-color: grey;">
                                 Save
                                 </button>
                         </div>
@@ -99,21 +138,21 @@
                     </form>
                   
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
 <script>
     function addNewPaddyArea(){
-        debugger;
-        document.getElementById("paddy-area-list").style.display = 'none';
+        // debugger;
+        // document.getElementById("paddy-area-list").style.display = 'none';
         document.getElementById("new-paddy-area").style.display = 'block';
     }
 
     function showList(){
-        debugger;
-        document.getElementById("paddy-area-list").style.display = 'block';
-        document.getElementById("new-paddy-area").style.display = 'none';
+        // debugger;
+        // document.getElementById("paddy-area-list").style.display = 'block';
+        // document.getElementById("new-paddy-area").style.display = 'none';
     }
 </script>
 {% endblock %}
