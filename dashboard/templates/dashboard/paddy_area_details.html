@@ -1,0 +1,64 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+
+<style>
+    .area-details{
+        font-size: 25px;
+        justify-content: space-around;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .area-details > table > tbody > tr> th {
+        width:50%; 
+        text-align: center;
+        border: 2px solid white ;
+    }
+
+    .area-details > table > tbody > tr> td {
+        width: 50%; 
+        text-align: center;
+        border: 2px solid white ;
+    }
+</style>
+
+    <h1>Paddy Area Monitoring System</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row justify-content-center">
+                <div class="col-6 map-border mb-2 mt-2 pt-2 pb-2">
+                    {{map|safe}}
+                </div>
+                <div class="area-details table  table-dark  col-4 mb-2 mt-2 pt-2 pb-2" style='width:33% !important; border-color: white !important;'>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Area Name</th>
+                                <td>{{area_info.area_name}}</td>
+                            </tr>
+                            <tr>
+                                <th>Start Date</th>
+                                <td>{{area_info.start_date}}</td>
+                            </tr>
+                            <tr>
+                                <th>Longitude</th>
+                                <td>{{area_info.logitude}}</td>
+                            </tr>
+                            <tr>
+                                <th>Latitude</th>
+                                <td>{{area_info.latitude}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+</script>
+{% endblock javascript %}

@@ -204,8 +204,8 @@ def getMap(paddy_area_info=None, colour=None, ee=False):
     # Create a folium map object.
     # guoxuan_location = [6.130130, 102.197939]
     if paddy_area_info != None:
-        my_map = folium.Map(location=[paddy_area_info[0].paddy_area.latitude, 
-                                paddy_area_info[0].paddy_area.longitude], 
+        my_map = folium.Map(location=[paddy_area_info[0].latitude, 
+                                paddy_area_info[0].longitude], 
                         zoom_start=20)
     else:
         my_map = folium.Map(location=[2.226888, 102.166600], zoom_start=20)
@@ -252,15 +252,15 @@ def getMap(paddy_area_info=None, colour=None, ee=False):
             if c=='yellow':
                 marker_color = 'orange'
 
-            mark = folium.Marker(location=[i.paddy_area.latitude, i.paddy_area.longitude], 
+            mark = folium.Marker(location=[i.latitude, i.longitude], 
                                  popup=popup,
-                                 tooltip=i.paddy_area.name,
+                                 tooltip=i.area_name,
                                  icon=folium.Icon(color=marker_color, icon_color=None),
                                  )
             feature_group.add_child(mark)
 
             #circles
-            circle = folium.Circle(location=[i.paddy_area.latitude, i.paddy_area.longitude], 
+            circle = folium.Circle(location=[i.latitude, i.longitude], 
                                             color = c, 
                                             radius = 100, 
                                             fill = True)

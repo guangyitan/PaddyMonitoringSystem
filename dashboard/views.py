@@ -7,16 +7,25 @@ from . import my_folium
 from . import forms
 from .models import PaddyAreaInfo
 
+ee = False
 # Create your views here.
 def index(request):
-    map_ = my_folium.getMap()
+    # query all paddy areas from db
+    paddy_areas = PaddyAreaInfo.objects.all()
+    
+    # lat_lst = [2.226888, 2.226888, 2.226888]
+    #     lng_lst = [102.166600, 102.166440, 102.166200]
+    #     name_lst = ['aa', 'bb', 'cc']
+    #     color_lst = ['green', 'orange', 'red']
+    #     color_lst2 = ['purple', '#FFFF00', 'red']
+
+
+    map_ = my_folium.getMap(ee = ee)
+    # map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
     # map_ = my_folium.getMap(ee = True)
 
     # instantiate the form to create new paddy
     form = forms.PaddyAreaInfoForm()
-
-    # query all paddy areas from db
-    paddy_areas = PaddyAreaInfo.objects.all()
     
     # bind all data into dictionary
     data = {
@@ -42,6 +51,19 @@ def index(request):
 
     return render(request, 'dashboard/index.html', data)
 
+def paddy_area_details(request, areaId):
+
+    if request.method == 'GET':
+        map_ = my_folium.getMap(ee=ee)
+
+        area_info = PaddyAreaInfo.objects.get(id = areaId)
+
+        data = {
+        'area_info': area_info,
+        'map': map_,
+    }
+    return render(request, 'dashboard/paddy_area_details.html', data)
+
 def test_info(request):
     form = forms.PaddyAreaInfoForm()
 
@@ -53,7 +75,7 @@ def say_hello(request):
 class DeletePaddyArea(View):
     def  get(self, request):
         id1 = request.GET.get('id', None)
-        PaddyAreaInfo.objects.get(id=id1).delete()
+        PaddyAreaInfo.objects.get(id = id1).delete()
         data = {
             'deleted': True
         }
