@@ -5,7 +5,7 @@ from django.db import models
 class PaddyAreaInfo(models.Model): #child
     area_name = models.CharField(max_length = 225)
     start_date = models.DateTimeField()
-    logitude = models.DecimalField(max_digits = 9, decimal_places = 6, null = True)
+    longitude = models.DecimalField(max_digits = 9, decimal_places = 6, null = True)
     latitude = models.DecimalField(max_digits = 9, decimal_places = 6, null = True)
     # verbose_name, used as display name in django
     # growth_classification = models.IntegerField(verbose_name = "Growth Classification", null=True)
