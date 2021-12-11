@@ -239,18 +239,23 @@ def getMap(paddy_area_info=None, colour=None, ee=False):
         feature_group = folium.FeatureGroup("Paddy Areas")
 
         #declaring markers
-        for i, c in zip(paddy_area_info, colour):
+        # for i, c in zip(paddy_area_info, colour):
+        for i in paddy_area_info:
             
             # my_image_path = utils.get_image_directory(i.paddy_images.url)
             
-            encoded = base64.b64encode(open(my_image_path, 'rb').read())
-            html = '<img src="data:image/png;base64,{}" width="200" height="200">'.format
-            iframe = IFrame(html(encoded.decode('UTF-8')), width=220, height=220)
-            popup = folium.Popup(iframe, max_width=300)
+            # encoded = base64.b64encode(open(my_image_path, 'rb').read())
+            # html = '<img src="data:image/png;base64,{}" width="200" height="200">'.format
+            # iframe = IFrame(html(encoded.decode('UTF-8')), width=220, height=220)
+            # popup = folium.Popup(iframe, max_width=300)
+            popup = folium.Popup(max_width=300)
 
-            marker_color = c
-            if c=='yellow':
-                marker_color = 'orange'
+            # marker_color = c
+            # if c=='yellow':
+            #     marker_color = 'orange'
+
+            marker_color = 'green'
+            c = 'green'
 
             mark = folium.Marker(location=[i.latitude, i.longitude], 
                                  popup=popup,

@@ -20,8 +20,8 @@ def index(request):
     #     color_lst2 = ['purple', '#FFFF00', 'red']
 
 
-    map_ = my_folium.getMap(ee = ee)
-    # map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
+    # map_ = my_folium.getMap(ee = ee)
+    map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
     # map_ = my_folium.getMap(ee = True)
 
     # instantiate the form to create new paddy
