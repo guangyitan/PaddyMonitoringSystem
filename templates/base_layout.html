@@ -16,15 +16,16 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>    
         <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script> 
         <script src='{% static "scripts.js" %}'></script>    
-        
+
     </head>
     <body>
         
-
         <div class='wrapper container mb-5'>
             {% block content %}
             {% endblock %}
+            {% block javascript %}
+            {% endblock javascript %}
         </div>
-    
+            
     </body>
 </html>

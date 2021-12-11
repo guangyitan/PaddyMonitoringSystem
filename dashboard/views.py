@@ -1,3 +1,5 @@
+from django.http.response import Http404, JsonResponse
+from django.views.generic import View
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect 
@@ -39,18 +41,6 @@ def index(request):
             return redirect('index')
 
     return render(request, 'dashboard/index.html', data)
-    # return render(request, 'dashboard/index.html')
-
-# def add_new_paddy_area(request):
-#     if request.method == 'POST':
-#         form = forms.PaddyAreaInfoForm(request.POST, request.FILES)
-#         if form.is_valid():
-            
-#             return redirect('dashboard:index')
-#     else:
-#         form = forms.PaddyAreaInfoForm()
-
-#     return render(request, 'dashboard/index.html', {'form': form})
 
 def test_info(request):
     form = forms.PaddyAreaInfoForm()
@@ -59,6 +49,15 @@ def test_info(request):
 
 def say_hello(request):
     return render(request, 'dashboard/hello.html', {'name': 'Mosh'})
+
+class DeletePaddyArea(View):
+    def  get(self, request):
+        id1 = request.GET.get('id', None)
+        PaddyAreaInfo.objects.get(id=id1).delete()
+        data = {
+            'deleted': True
+        }
+        return JsonResponse(data)
 
 
 
