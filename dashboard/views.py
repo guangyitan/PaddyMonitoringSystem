@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect 
 from . import my_folium
 from . import forms
-from .models import PaddyAreaInfo
+from .models import ImagePredictions, PaddyAreaInfo
+import datetime
 
 ee = False
 # Create your views here.
@@ -53,15 +54,39 @@ def index(request):
 
 def paddy_area_details(request, areaId):
 
-    if request.method == 'GET':
-        map_ = my_folium.getMap(ee=ee)
+    if request.method == 'POST':
+        form = forms.ImagePredictionForm(request.POST, files=request.FILES)
+        print(form.errors)
 
-        area_info = PaddyAreaInfo.objects.get(id = areaId)
+        if form.is_valid():
+            print("form valid")
+            print(form.cleaned_data)
+            print(form.cleaned_data['paddy_area_id'])
+            print(form.cleaned_data['image'])
 
-        data = {
+            imgPredObj = ImagePredictions()
+            imgPredObj.paddy_area_id = form.cleaned_data['paddy_area_id']
+            imgPredObj.image = form.cleaned_data['image']
+            # set TIME_ZONE = 'Etc/GMT+8' in settings.py
+            imgPredObj.prediction_date = datetime.datetime.now()
+            # TODO: append model here
+            imgPredObj.prediction = 2
+            imgPredObj.save()
+            # do model prediction and store in db
+    
+    map_ = my_folium.getMap(ee=ee)
+
+    area_info = PaddyAreaInfo.objects.get(id = areaId)
+    predictions = ImagePredictions.objects.filter(paddy_area_id = areaId).order_by('prediction_date')
+    form = forms.ImagePredictionForm()
+
+    data = {
         'area_info': area_info,
         'map': map_,
+        'predictions': predictions,
+        'form' : form,
     }
+
     return render(request, 'dashboard/paddy_area_details.html', data)
 
 def test_info(request):

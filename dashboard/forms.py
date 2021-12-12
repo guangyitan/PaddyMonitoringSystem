@@ -22,3 +22,9 @@ class PaddyAreaInfoForm(forms.ModelForm):
             'longitude': ('longitude (Min -180, Max 180)'),
             'latitude': ('Latitude (Min 0, Max 90)'),
         }
+
+class ImagePredictionForm(forms.ModelForm):
+
+    class Meta:
+        model = models.ImagePredictions
+        fields = ['paddy_area_id', 'image',]
