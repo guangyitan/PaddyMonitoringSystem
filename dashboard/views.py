@@ -13,13 +13,6 @@ ee = False
 def index(request):
     # query all paddy areas from db
     paddy_areas = PaddyAreaInfo.objects.all()
-    
-    # lat_lst = [2.226888, 2.226888, 2.226888]
-    #     lng_lst = [102.166600, 102.166440, 102.166200]
-    #     name_lst = ['aa', 'bb', 'cc']
-    #     color_lst = ['green', 'orange', 'red']
-    #     color_lst2 = ['purple', '#FFFF00', 'red']
-
 
     # map_ = my_folium.getMap(ee = ee)
     map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
@@ -73,15 +66,13 @@ def paddy_area_details(request, areaId):
             imgPredObj.prediction = 2
             imgPredObj.save()
             # do model prediction and store in db
-    
-    map_ = my_folium.getMap(ee=ee)
-
-    area_info = PaddyAreaInfo.objects.get(id = areaId)
+    area_info = PaddyAreaInfo.objects.filter(id = areaId)
+    map_ = my_folium.getMap(ee=ee, paddy_area_info = area_info)
     predictions = ImagePredictions.objects.filter(paddy_area_id = areaId).order_by('prediction_date')
     form = forms.ImagePredictionForm()
 
     data = {
-        'area_info': area_info,
+        'area_info': area_info[0],
         'map': map_,
         'predictions': predictions,
         'form' : form,

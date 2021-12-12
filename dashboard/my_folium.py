@@ -242,29 +242,43 @@ def getMap(paddy_area_info=None, colour=None, ee=False):
         #declaring markers
         # for i, c in zip(paddy_area_info, colour):
         for i in paddy_area_info:
-            tt = ImagePredictions.objects.latest('prediction_date').image
-            my_image_path = utils.get_image_directory(tt)
-            # my_image_path = utils.get_image_directory(i.paddy_images.url)
-            
-            encoded = base64.b64encode(open(my_image_path, 'rb').read())
-            html = '<img src="data:image/png;base64,{}" width="200" height="200">'.format
-            iframe = IFrame(html(encoded.decode('UTF-8')), width=220, height=220)
-            popup = folium.Popup(iframe, max_width=300)
-            # popup = folium.Popup(max_width=300)
+            try:
+                pred_ = ImagePredictions.objects.filter(paddy_area_id = i.id)
+                img_ = pred_.latest('prediction_date').image
+                # tt = ImagePredictions.objects.latest('prediction_date').image
+                my_image_path = utils.get_image_directory(img_)
+                # my_image_path = utils.get_image_directory(i.paddy_images.url)
+                
+                encoded = base64.b64encode(open(my_image_path, 'rb').read())
+                html = '<img src="data:image/png;base64,{}" width="200" height="200">'.format
+                iframe = IFrame(html(encoded.decode('UTF-8')), width=220, height=220)
+                popup = folium.Popup(iframe, max_width=300)
+                # popup = folium.Popup(max_width=300)
 
-            # marker_color = c
-            # if c=='yellow':
-            #     marker_color = 'orange'
+                # marker_color = c
+                # if c=='yellow':
+                #     marker_color = 'orange'
 
-            marker_color = 'green'
-            c = 'green'
+                marker_color = 'green'
+                c = 'green'
 
-            mark = folium.Marker(location=[i.latitude, i.longitude], 
-                                 popup=popup,
-                                 tooltip=i.area_name,
-                                 icon=folium.Icon(color=marker_color, icon_color=None),
-                                 )
-            feature_group.add_child(mark)
+                mark = folium.Marker(location=[i.latitude, i.longitude], 
+                                    popup=popup,
+                                    tooltip=i.area_name,
+                                    icon=folium.Icon(color=marker_color, icon_color=None),
+                                    )
+                feature_group.add_child(mark)
+
+            except:
+                marker_color = 'green'
+                c = 'green'
+
+                mark = folium.Marker(location=[i.latitude, i.longitude], 
+                                    tooltip=i.area_name,
+                                    icon=folium.Icon(color=marker_color, icon_color=None),
+                                    )
+                feature_group.add_child(mark)
+                print("No image predictions")
 
             #circles
             circle = folium.Circle(location=[i.latitude, i.longitude], 
