@@ -39,7 +39,7 @@
                             {% for i in paddy_areas%}
                             <tr id="area-{{i.id}}"> 
                                 <td>{{i.id}}</td>
-                                <td>{{i.area_name}}</td>
+                                <td><a href='{% url "dashboard:paddy_area_details" i.id%}'>{{i.area_name}}</a></td>
                                 <td>{{i.start_date}}</td>
                                 <td>{{i.latitude}}</td>
                                 <td>{{i.longitude}}</td>
