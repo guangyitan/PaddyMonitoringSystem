@@ -14,8 +14,13 @@ def index(request):
     # query all paddy areas from db
     paddy_areas = PaddyAreaInfo.objects.all()
 
-    # map_ = my_folium.getMap(ee = ee)
-    map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
+    if paddy_areas.exists():
+        map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
+
+    # no paddy areas saved in db
+    else:
+        map_ = my_folium.getMap(ee = ee)
+
     # map_ = my_folium.getMap(ee = True)
 
     # instantiate the form to create new paddy
