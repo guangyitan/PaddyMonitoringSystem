@@ -92,7 +92,21 @@
                         <td>{{i.id}}</td>
                         <td>{{i.prediction_date}}</td>
                         <td><img src={{i.image.url}}  style="width:200px;height:200px;"/></td>
-                        <td>{{i.prediction}}</td>
+                        <td>
+                        {% if i.prediction == 1 %}
+                            30 days
+                        {% elif i.prediction == 2 %}
+                            50 days
+                        {% elif i.prediction == 3 %}
+                            70 days
+                        {% elif i.prediction == 4 %}
+                            90 days
+                        {% elif i.prediction == 5 %}
+                            Ready to harvest
+                        {% else %}
+                            Error in predicting, Please submit a new photo
+                        {% endif %} 
+                        </td>
                         
                     </tr>
                     {% endfor %}

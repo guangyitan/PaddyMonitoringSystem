@@ -9,6 +9,7 @@ from .models import ImagePredictions, PaddyAreaInfo
 import datetime
 
 ee = False
+# ee = True
 # Create your views here.
 def index(request):
     # query all paddy areas from db
