@@ -73,6 +73,15 @@ class CustomConfig(Config):
     # DETECTION_MIN_CONFIDENCE = 0.9
     DETECTION_MIN_CONFIDENCE = detection_min_confidence
 
+def getClass(class_ids, scores):
+    # convert numpy array type to list type to perform list operations
+    class_ids = list(class_ids)
+    scores = list(scores)
+
+    max_confidence = max(scores)
+    max_confidence_index = scores.index(max_confidence)
+    return class_ids[max_confidence_index]
+
 def display_instances(pred_id, file_name, image, boxes, masks, class_ids, class_names,
                       scores=None, title="",
                       figsize=(16, 16), ax=None,
@@ -160,12 +169,19 @@ def display_instances(pred_id, file_name, image, boxes, masks, class_ids, class_
     ax.imshow(masked_image.astype(np.uint8))
     print("Hi2")
 
+    imgPredObj = ImagePredictions.objects.get(id = pred_id)
+
+    # get the class of paddy detected with highest confidence score
+    print("scores", scores)
+    print("class_ids", class_ids)
+    if class_ids.size != 0:
+        prediction_class = getClass(class_ids, scores)
+        imgPredObj.prediction = prediction_class
+
     # save the label image into Database
     figure = io.BytesIO()
     plt.savefig(figure, format="png")
     content_file = ImageFile(figure)
-
-    imgPredObj = ImagePredictions.objects.get(id = pred_id)
     print("file name", "{}.png".format(file_name))
     imgPredObj.result_image.save("{}.png".format(file_name), content_file)
     imgPredObj.save()
@@ -219,7 +235,7 @@ def predictCustomImage(pred_id, img):
     model.load_weights(WEIGHTS_PATH, by_name=True)
 
     # TODO: Modify class names if needed
-    class_names = ['BG', '30days', '50days', '70days', '90days', 'harvest']
+    class_names = ['BG', '30 Days', '50 Days', '70 Days', '90 Days', 'Harvest']
 
     image1 = mpimg.imread(img)
     print("img:", img)
@@ -237,8 +253,6 @@ def predictCustomImage(pred_id, img):
     ax = get_ax(1)
     r1 = results1[0]
 
-    display_instances(pred_id, file_name, image1, r1['rois'], r1['masks'], r1['class_ids'],
-                                class_names, r1['scores'], ax=ax,
-                                title="Predictions1")
+    display_instances(pred_id, file_name, image1, r1['rois'], r1['masks'], r1['class_ids'], class_names, r1['scores'], ax=ax)
     
     K.clear_session()
