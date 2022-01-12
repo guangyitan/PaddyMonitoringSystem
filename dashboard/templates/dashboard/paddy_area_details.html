@@ -66,7 +66,7 @@
                 <div class="row" style="margin-left: 0; margin-right: 0">
                     <div class="col-12" style="padding: 0%;">
                         <label class="form-label" for="customFile">Add new paddy image here</label>
-                        <input type="file" class="form-control" id="image" name="image" accept=".png">
+                        <input type="file" class="form-control" id="image" name="image" accept=".png .jpg">
                     </div>
                 </div>
                 <div class="row" style="margin-left: 0; margin-right: 0;">
@@ -91,7 +91,8 @@
                     <tr id="prediction-{{i.id}}"> 
                         <td>{{i.id}}</td>
                         <td>{{i.prediction_date}}</td>
-                        <td><img src={{i.image.url}}  style="width:200px;height:200px;"/></td>
+                        <td><img src={{i.result_image.url}}  style="width:200px;height:200px;"/></td>
+                        <!-- <td><img src={{i.image.url}}  style="width:200px;height:200px;"/></td> -->
                         <td>
                         {% if i.prediction == 1 %}
                             30 days

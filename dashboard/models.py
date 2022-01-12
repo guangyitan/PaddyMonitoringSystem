@@ -19,6 +19,7 @@ class ImagePredictions(models.Model):
     prediction_date = models.DateTimeField()
     # image used to predict the growth
     image = models.ImageField(default='default.png', blank=True, upload_to='photos/%Y/%m/%d')
+    result_image = models.ImageField(default='default.png', blank=True, upload_to='photos/%Y/%m/%d')
     # prediction result
     prediction = models.IntegerField()
 

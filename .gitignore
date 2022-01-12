@@ -255,3 +255,9 @@ cython_debug/
 #json
 *.json
 db.sqlite3
+
+# Model Folder
+Mask_RCNN-master
+
+# py37 requirement
+py37requirements.txt
