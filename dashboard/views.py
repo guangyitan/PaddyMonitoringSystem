@@ -6,7 +6,13 @@ from django.shortcuts import redirect
 from . import my_folium
 from . import forms
 from .models import ImagePredictions, PaddyAreaInfo
+from . import utils
 import datetime
+import os
+from django.core.files import File  # you need this somewhere
+import urllib.request
+
+from . import predictModel
 
 ee = False
 # ee = True
@@ -68,10 +74,17 @@ def paddy_area_details(request, areaId):
             imgPredObj.image = form.cleaned_data['image']
             # set TIME_ZONE = 'Etc/GMT+8' in settings.py
             imgPredObj.prediction_date = datetime.datetime.now()
-            # TODO: append model here
-            imgPredObj.prediction = 2
+            imgPredObj.prediction = 0
             imgPredObj.save()
-            # do model prediction and store in db
+
+            print(imgPredObj.id)
+            img_ = ImagePredictions.objects.get(id = imgPredObj.id).image
+            image_path = utils.get_image_directory(img_)
+            print(image_path)
+
+            # TODO: append model here
+            predictModel.predictCustomImage(imgPredObj.id, image_path)
+
     area_info = PaddyAreaInfo.objects.filter(id = areaId)
     map_ = my_folium.getMap(ee=ee, paddy_area_info = area_info)
     predictions = ImagePredictions.objects.filter(paddy_area_id = areaId).order_by('prediction_date')
