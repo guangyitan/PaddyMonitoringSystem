@@ -96,7 +96,7 @@ def paddy_area_details(request, areaId):
 
     area_info = PaddyAreaInfo.objects.filter(id = areaId)
     map_ = my_folium.getMap(ee=ee, paddy_area_info = area_info)
-    predictions = ImagePredictions.objects.filter(paddy_area_id = areaId).order_by('prediction_date')
+    predictions = ImagePredictions.objects.filter(paddy_area_id = areaId).order_by('-prediction_date')
     form = forms.ImagePredictionForm()
 
     data = {
