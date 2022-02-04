@@ -21,6 +21,13 @@ def index(request):
     # query all paddy areas from db
     paddy_areas = PaddyAreaInfo.objects.all()
 
+    # query latest predictions
+    pred_list = []
+    for area_ in paddy_areas:
+        pred_ = ImagePredictions.objects.filter(paddy_area_id = area_.id)
+        pred_ = pred_.latest('prediction_date').prediction
+        pred_list.append(pred_)
+
     if paddy_areas.exists():
         map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
 
@@ -33,12 +40,14 @@ def index(request):
     # instantiate the form to create new paddy
     form = forms.PaddyAreaInfoForm()
     
+    paddy_areas = zip(paddy_areas, pred_list)
     # bind all data into dictionary
     data = {
         'map': map_,
         'form': form,
         'paddy_areas': paddy_areas,
     }
+    print(pred_list)
 
     if request.method == 'POST':
         print("aa")

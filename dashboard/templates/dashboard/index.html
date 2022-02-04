@@ -42,17 +42,33 @@
                                 <th>Start Date</th>
                                 <th>Latitude</th>
                                 <th>Longitude</th>
+                                <th>Latest Prediction</th>
                                 <th style="text-align: center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for i in paddy_areas%}
+                            {% for i, j in paddy_areas%}
                             <tr id="area-{{i.id}}"> 
                                 <td>{{i.id}}</td>
                                 <td><a href='{% url "dashboard:paddy_area_details" i.id%}'>{{i.area_name}}</a></td>
                                 <td>{{i.start_date}}</td>
                                 <td>{{i.latitude}}</td>
                                 <td>{{i.longitude}}</td>
+                                <td>
+                                    {% if j == 1 %}
+                                        30 days
+                                    {% elif j == 2 %}
+                                        50 days
+                                    {% elif j == 3 %}
+                                        70 days
+                                    {% elif j == 4 %}
+                                        90 days
+                                    {% elif j == 5 %}
+                                        Ready to harvest
+                                    {% else %}
+                                        Error in predicting, Please submit a new photo
+                                    {% endif %} 
+                                    </td>
                                 <td>
                                     <button class="btn btn-danger form-control" onClick="deleteUser('{{i.id}}', '{{i.area_name}}')">DELETE</button>
                                 </td>
