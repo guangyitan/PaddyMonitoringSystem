@@ -38,6 +38,14 @@
 
     <h1>Paddy Area Monitoring System</h1>
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" style="padding-left: 0%;">
+                <button type="button" class="btn btn-secondary float-start" onclick="location.href='/dashboard/index'">
+                    <!-- <a href='{% url "dashboard:index"%}'>Back to Home</a> -->
+                    Back to Home
+                    </button>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-6 map-border mb-2 mt-2 pt-2 pb-2">
                 {{map|safe}}
@@ -77,6 +85,7 @@
                     <div class="col-12" style="padding: 0%;">
                         <label class="form-label" for="customFile">Add new paddy image here</label>
                         <input type="file" class="form-control" id="image" name="image" accept=".png .jpg">
+                        <small>Only upload paddy plant images. Supported file types: PNG, JPG</small><br><br>
                     </div>
                 </div>
                 <div class="row" style="margin-left: 0; margin-right: 0;">

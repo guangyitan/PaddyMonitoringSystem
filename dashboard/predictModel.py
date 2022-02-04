@@ -46,13 +46,9 @@ print(MODEL_DIR)
 # Path to trained weights
 # You can download this file from the Releases page
 # https://github.com/matterport/Mask_RCNN/releases
-WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs\object20211216T1754\mask_rcnn_object_0010.h5")  # TODO: update this path
+# WEIGHTS_PATH = os.path.join(ROOT_DIR, "logs\object20211216T1754\mask_rcnn_object_0010.h5")
+WEIGHTS_PATH = os.path.join(ROOT_DIR, "paddy_detection_model.h5")  # TODO: update this path
 print(WEIGHTS_PATH)
-
-# # Path to trained weights file
-# COCO_WEIGHTS_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
-# # Directory to save logs and model checkpoints
-# DEFAULT_LOGS_DIR = os.path.join(ROOT_DIR, "logs")
 
 class CustomConfig(Config):
     """Configuration for training on the dataset.
@@ -87,7 +83,7 @@ def display_instances(pred_id, file_name, image, boxes, masks, class_ids, class_
                       figsize=(16, 16), ax=None,
                       show_mask=True, show_bbox=True,
                       colors=None, captions=None):
-    print("Hi")
+    print("Predicting")
 
     """
     boxes: [num_instance, (y1, x1, y2, x2, class_id)] in image coordinates.
@@ -135,7 +131,7 @@ def display_instances(pred_id, file_name, image, boxes, masks, class_ids, class_
         y1, x1, y2, x2 = boxes[i]
         if show_bbox:
             p = patches.Rectangle((x1, y1), x2 - x1, y2 - y1, linewidth=2,
-                                alpha=0.7, linestyle="dashed",
+                                alpha=0.7, linestyle="solid",
                                 edgecolor=color, facecolor='none')
             ax.add_patch(p)
 
@@ -157,15 +153,16 @@ def display_instances(pred_id, file_name, image, boxes, masks, class_ids, class_
 
         # Mask Polygon
         # Pad to ensure proper polygons for masks that touch image edges.
-        padded_mask = np.zeros(
-            (mask.shape[0] + 2, mask.shape[1] + 2), dtype=np.uint8)
-        padded_mask[1:-1, 1:-1] = mask
-        contours = visualize.find_contours(padded_mask, 0.5)
-        for verts in contours:
-            # Subtract the padding and flip (y, x) to (x, y)
-            verts = np.fliplr(verts) - 1
-            p = visualize.Polygon(verts, facecolor="none", edgecolor=color)
-            ax.add_patch(p)
+        # padded_mask = np.zeros(
+        #     (mask.shape[0] + 2, mask.shape[1] + 2), dtype=np.uint8)
+        # padded_mask[1:-1, 1:-1] = mask
+        # contours = visualize.find_contours(padded_mask, 0.5)
+        # for verts in contours:
+        #     # Subtract the padding and flip (y, x) to (x, y)
+        #     verts = np.fliplr(verts) - 1
+        #     p = visualize.Polygon(verts, facecolor="none", edgecolor=color)
+        #     ax.add_patch(p)
+        
     ax.imshow(masked_image.astype(np.uint8))
     print("Hi2")
 
@@ -253,6 +250,8 @@ def predictCustomImage(pred_id, img):
     ax = get_ax(1)
     r1 = results1[0]
 
-    display_instances(pred_id, file_name, image1, r1['rois'], r1['masks'], r1['class_ids'], class_names, r1['scores'], ax=ax)
+    display_instances(pred_id, file_name, image1, 
+                    r1['rois'], r1['masks'], r1['class_ids'], 
+                    class_names, r1['scores'], ax=ax, show_mask=False)
     
     K.clear_session()
