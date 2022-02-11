@@ -65,6 +65,8 @@
                                         90 days
                                     {% elif j == 5 %}
                                         Ready to harvest
+                                    {% elif j == 6 %}
+                                        No prediction
                                     {% else %}
                                         Error in predicting, Please submit a new photo
                                     {% endif %} 
@@ -92,7 +94,7 @@
                     <div class="row">
                         <div class="col-6" style="padding-left: 0%;">
                             <label for="area_name" class="form-label">Area Name: </label>
-                            <input id="area_name" class="form-control" type="text" name="area_name" maxlength="50" value="Area a" required>
+                            <input id="area_name" class="form-control" type="text" name="area_name" maxlength="50" value="Area" required>
                         </div>
                         <div class="col-6" style="padding-right: 0%;">
                             <label for="start_date" class="form-label">Start Date: </label>
@@ -102,11 +104,11 @@
                     <div class="row">
                         <div class="col-6" style="padding-left: 0%;">
                             <label for="longitude" class="form-label">Longitude: </label>
-                            <input id="longitude" class="form-control" type="number" name="longitude" min="-180" max="180" value="102" step="0.000001" required> 
+                            <input id="longitude" class="form-control" type="number" name="longitude" min="-180" max="180" value="102.169785" step="0.000001" required> 
                         </div>
                         <div class="col-6" style="padding-right: 0%;">
                             <label for="latitude" class="form-label">Latitude: </label>
-                            <input id="latitude" class="form-control" type="number" name="latitude" min="0" max="90" value="2" step="0.000001" required>
+                            <input id="latitude" class="form-control" type="number" name="latitude" min="0" max="90" value="2.227491" step="0.000001" required>
                         </div>
                     </div>
                     <div class="row">

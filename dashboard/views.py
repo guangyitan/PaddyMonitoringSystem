@@ -14,8 +14,8 @@ import urllib.request
 
 from . import predictModel
 
-ee = False
-# ee = True
+# ee = False
+ee = True
 # Create your views here.
 def index(request):
     # query all paddy areas from db
@@ -23,13 +23,21 @@ def index(request):
 
     # query latest predictions
     pred_list = []
-    for area_ in paddy_areas:
-        pred_ = ImagePredictions.objects.filter(paddy_area_id = area_.id)
-        pred_ = pred_.latest('prediction_date').prediction
-        pred_list.append(pred_)
 
     if paddy_areas.exists():
         map_ = my_folium.getMap(ee = ee, paddy_area_info = paddy_areas)
+        for area_ in paddy_areas:
+            pred_ = ImagePredictions.objects.filter(paddy_area_id = area_.id)
+
+            # check if there is any image uploaded for prediciton
+            if pred_:
+                print(pred_)
+                pred_ = pred_.latest('prediction_date').prediction
+                pred_list.append(pred_)
+            else:
+                # prediciton = 6 if there is no prediction
+                pred_list.append(6)
+            
 
     # no paddy areas saved in db
     else:

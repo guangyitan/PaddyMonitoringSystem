@@ -70,6 +70,9 @@ class CustomConfig(Config):
     DETECTION_MIN_CONFIDENCE = detection_min_confidence
 
 def getClass(class_ids, scores):
+    """
+    returns: prediction class with the highest confidence score
+    """
     # convert numpy array type to list type to perform list operations
     class_ids = list(class_ids)
     scores = list(scores)
