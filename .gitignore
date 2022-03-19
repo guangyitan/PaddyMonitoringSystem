@@ -158,6 +158,9 @@ venv.bak/
 *.sublime-workspace 
 *.sublime-project 
 
+#json
+*.json
+
 # sftp configuration file 
 sftp-config.json 
 
@@ -252,8 +255,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-#json
-*.json
 db.sqlite3
 
 # Model Folder
@@ -261,3 +262,6 @@ Mask_RCNN-master
 
 # py37 requirement
 py37requirements.txt
+
+# dataset annotations
+!dataset/val/via_project.json
