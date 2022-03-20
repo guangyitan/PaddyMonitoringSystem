@@ -4,7 +4,9 @@ This repository contains 2 main parts.
 2. Paddy Growth CLassification Deep Learning Model
 
 ## Dataset
-[Dataset Link](https://drive.google.com/drive/folders/1Mk0O_kgzL1QlAk2nty_WTcavFRc8JUwk?usp=sharing)
+[Annotated Dataset Link](https://drive.google.com/drive/folders/179R-TmXyWHYqAnzQoYHvlBOA2y7-yRmh?usp=sharing)
+
+[Raw Dataset Link](https://drive.google.com/drive/folders/1lCyH_PZ2LKDOxcen_Wc39hY-2W_aDgG_?usp=sharing)
 
 There are 2 folders in the Google Drive 
 
